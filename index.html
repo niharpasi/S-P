@@ -590,22 +590,34 @@
 
   .left-hanging{
 
-    width:220px;
+    position:fixed;
+
+    width:180px;
 
     top:0;
 
-    left:-20px;
+    left:0;
+
+    z-index:20;
+
+    display:block;
   }
 
   /* RIGHT HANGING */
 
   .right-hanging{
 
-    width:220px;
+    position:fixed;
+
+    width:180px;
 
     top:0;
 
-    right:-20px;
+    right:0;
+
+    z-index:20;
+
+    display:block;
   }
 
   /* BOTTOM CORNERS */
@@ -627,6 +639,15 @@
     left:50%;
 
     transform:translateX(-50%);
+  }
+  .left-hanging img,
+  .right-hanging img{
+
+    width:100%;
+
+    height:auto;
+
+    display:block;
   }
 }
    /* PREMIUM GLASS CARD */
@@ -1476,8 +1497,10 @@ text-align:center;
 
     <h1>
       Sanjit Pasi
+      <p class="venue-name">S/O Mahesh & Sapna Pasi</p>
       <div class="and">&</div>
       Pritika Bharankar
+      <p class="venue-name">D/O Shashikant & Shweta Bharankar</p>
     </h1>
 
     <div class="couple-photo">
