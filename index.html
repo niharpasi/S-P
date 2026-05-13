@@ -419,13 +419,6 @@
   inset:0;
 
   background:
-  
-    /* DARK BROWN VIGNETTE */
-    radial-gradient(
-      circle,
-      transparent 45%,
-      rgba(60,30,15,0.35) 100%
-    ),
 
     /* TOP REPEATING DECOR */
     url("assets/top.png");
@@ -473,6 +466,9 @@
 }
 
 @media(max-width:768px){
+  .hero{
+  background:#8b5e3c;
+}
 
   .hero::before,
   .hero::after{
@@ -577,13 +573,14 @@
 
   .top-center{
 
-    .hero::before{
+  width:1400px;
 
-    background-size:
-      cover,
-      auto 140px;   /* increased from 70px */
-  }
-  }
+  top:-20px;
+
+  left:50%;
+
+  transform:translateX(-50%);
+}
 
   /* LEFT HANGING */
 
@@ -631,13 +628,14 @@
 
   .bottom-center{
 
-    .hero::after{
+  width:1400px;
 
-    height:140px;   /* increased */
+  bottom:-20px;
 
-    background-size:auto 140px;
-  }
-  }
+  left:50%;
+
+  transform:translateX(-50%);
+}
   .left-hanging img,
   .right-hanging img{
 
