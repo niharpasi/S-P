@@ -474,14 +474,21 @@
 
 @media(max-width:768px){
 
-  .hero::before,
-  .hero::after{
+  .hero::before{
 
-    height:70px;
-
-    background-size:auto 70px;
+    background-size:
+      cover,
+      auto 140px;   /* increased from 70px */
   }
 
+  /* BOTTOM CENTER */
+
+  .hero::after{
+
+    height:140px;   /* increased */
+
+    background-size:auto 140px;
+  }
 }
 
 /* =========================
@@ -715,7 +722,6 @@ text-align:center;
 
   width:200%;
   height:200%;
-  display:none;
   background:
   linear-gradient(
     120deg,
@@ -727,6 +733,25 @@ text-align:center;
   transform:rotate(25deg);
 
   animation:shine 8s linear infinite;
+}
+
+@media(max-width:768px){
+
+  .card::before{
+    display:none;
+  }
+
+  .card{
+
+    background:#d4b295;
+
+    backdrop-filter:none;
+
+    -webkit-backdrop-filter:none;
+
+    overflow:hidden;
+  }
+
 }
 
 @keyframes shine{
