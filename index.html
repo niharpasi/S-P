@@ -573,7 +573,7 @@
 
   left:50%;
 
-  transform:translateX(0%);
+  transform:translateX(-50%);
 }
 
   /* LEFT HANGING */
@@ -1433,6 +1433,75 @@ text-align:center;
 
   transform:translateY(-2px);
 }
+
+/* FLOWER PETALS */
+
+#petal-container{
+
+  position:fixed;
+
+  inset:0;
+
+  pointer-events:none;
+
+  overflow:hidden;
+
+  z-index:9999;
+}
+
+.petal{
+
+  position:absolute;
+
+  top:-50px;
+
+  width:50px;
+  height:50px;
+
+  background-size:contain;
+
+  background-repeat:no-repeat;
+
+  opacity:0.95;
+}
+
+/* FALLING */
+
+@keyframes petalFall{
+
+  from{
+    transform:
+      translateY(-50px)
+      rotate(0deg);
+  }
+
+  to{
+    transform:
+      translateY(110vh)
+      rotate(360deg);
+  }
+}
+
+/* SWING */
+
+@keyframes petalSway{
+
+  0%,100%{
+    margin-left:0;
+  }
+
+  25%{
+    margin-left:calc(var(--sway) * -1);
+  }
+
+  50%{
+    margin-left:var(--sway);
+  }
+
+  75%{
+    margin-left:calc(var(--sway) * -0.5);
+  }
+}
   </style>
 </head>
 
@@ -1677,6 +1746,107 @@ text-align:center;
 
 <script>
 
+  /* FLOWER PETALS */
+  const petalImages = [
+
+  "assets/petal1.png",
+
+  "assets/petal2.png",
+
+  "assets/petal3.png",
+
+  "assets/petal4.png"
+];
+
+function launchPetals(){
+
+  const container =
+  document.getElementById("petal-container");
+
+  for(let i = 0; i < 70; i++){
+
+    const petal =
+    document.createElement("div");
+
+    petal.classList.add("petal");
+
+    /* RANDOM PETAL IMAGE */
+
+    const randomPetal =
+    petalImages[
+      Math.floor(
+        Math.random() *
+        petalImages.length
+      )
+    ];
+
+    petal.style.backgroundImage =
+    `url(${randomPetal})`;
+
+    /* RANDOM START POSITION */
+
+    petal.style.left =
+    Math.random() * 100 + "vw";
+
+    /* RANDOM SIZE */
+
+    const size =
+    30 + Math.random() * 35;
+
+    petal.style.width =
+    size + "px";
+
+    petal.style.height =
+    size + "px";
+
+    /* RANDOM FALL SPEED */
+
+    const duration =
+    4 + Math.random() * 6;
+
+    /* RANDOM SWAY */
+
+    const swayDuration =
+    2 + Math.random() * 3;
+
+    petal.style.animation =
+    `
+    petalFall ${duration}s linear forwards,
+    petalSway ${swayDuration}s ease-in-out infinite
+    `;
+
+    /* RANDOM DELAY */
+
+    petal.style.animationDelay =
+    `${Math.random()*2}s`;
+
+    /* RANDOM ROTATION */
+
+    petal.style.transform =
+    `rotate(${Math.random()*360}deg)`;
+
+    /* RANDOM OPACITY */
+
+    petal.style.opacity =
+    0.6 + Math.random() * 0.4;
+
+    /* RANDOM SWAY DISTANCE */
+
+    petal.style.setProperty(
+      '--sway',
+      `${20 + Math.random()*100}px`
+    );
+
+    container.appendChild(petal);
+
+    setTimeout(()=>{
+
+      petal.remove();
+
+    },12000);
+  }
+}
+
   const weddingDate = new Date('June 24, 2026 12:41:00').getTime();
 
   const countdown = setInterval(() => {
@@ -1830,6 +2000,59 @@ function scratch(x, y){
   );
 
   ctx.fill();
+
+  checkScratchCompletion();
+}
+
+function checkScratchCompletion(){
+
+  const imageData =
+  ctx.getImageData(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  const pixels =
+  imageData.data;
+
+  let transparent = 0;
+
+  for(let i = 3; i < pixels.length; i += 4){
+
+    if(pixels[i] === 0){
+      transparent++;
+    }
+  }
+
+  const percent =
+  transparent /
+  (canvas.width * canvas.height);
+
+  /* 55% SCRATCHED */
+
+  if(percent > 0.55 && !canvas.dataset.done){
+
+    canvas.dataset.done = "true";
+
+    /* FADE OUT */
+
+    canvas.style.transition =
+    "opacity 0.8s ease";
+
+    canvas.style.opacity = "0";
+
+    setTimeout(()=>{
+
+      canvas.style.display = "none";
+
+    },800);
+
+    /* FLOWERS */
+
+    launchPetals();
+  }
 }
 
 /* GET POINTER POSITION */
@@ -1920,6 +2143,6 @@ window.addEventListener('touchend',()=>{
 });
 
 </script>
-
+<div id="petal-container"></div>
 </body>
 </html>
